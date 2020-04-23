@@ -11,6 +11,7 @@ import {
   setSpan,
   startApp,
   startSearch,
+  takeScreenshot,
   waitForResults,
   writeSearch
 } from "../lib/app.js"
@@ -42,9 +43,14 @@ describe("Query tests", () => {
   })
 
   beforeEach(async () => {
-    await setSpan(app, "Whole Space")
-    await writeSearch(app, "")
-    await waitForResults(app)
+    try {
+      await setSpan(app, "Whole Space")
+      await writeSearch(app, "")
+      await waitForResults(app)
+    } catch (e) {
+      await takeScreenshot(app)
+      throw e
+    }
   })
 
   for (let i = 0; i < simpleQueries.length; i++) {
