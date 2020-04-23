@@ -47,10 +47,9 @@ describe("Query tests", () => {
     await waitForResults(app)
   })
 
-  let i = 0
-  while (i < 10000) {
-    let zql = simpleQueries[i % simpleQueries.length]
-    let testId = sprintf("%03d", i++)
+  for (let i = 0; i < simpleQueries.length; i++) {
+    let zql = simpleQueries[i]
+    let testId = sprintf("%03d", i)
     stdTest(`query${testId}: "${zql}"`, (done) => {
       writeSearch(app, zql)
         .then(async () => {
